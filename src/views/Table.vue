@@ -1,19 +1,28 @@
 <template>
     <div class="container">
-        <card-black/>
-        <cards-white/>
+        <h4 class="title is-4 has-text-centered">Código: {{codigo}}</h4>
+        <black-card/>
+        <white-cards/>
     </div>
 </template>
 
 <script>
-import CardBlack from '../components/CardBlack';
-import CardsWhite from '../components/CardsWhite/Cards'
+import BlackCard from '../components/BlackCard';
+import WhiteCards from '../components/WhiteCards/Cards'
 
 export default {
     name: 'Table',
+    data(){
+        return {
+            codigo: this.$store.state.table.codigo
+        }
+    },
+    mounted (){
+        this.codigo = this.$store.state.table.codigo
+    },
     components:{
-        CardBlack,
-        CardsWhite
+        BlackCard,
+        WhiteCards
     }
 }
 </script>

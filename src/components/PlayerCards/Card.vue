@@ -7,16 +7,15 @@
                 </p>
             </div>
         </div>
-        <br>
-        <h5 class="subtitle is-5 has-text-centered has-text-black">
-            {{ item.name }}
-        </h5>
+        <button class="button is-warning is-fullwidth">
+            Lanzar
+        </button>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'CardWhite',
+        name: 'CurrentCard',
         props:['item']
         /* created() {
             axios
@@ -29,6 +28,8 @@
 
 <style>
     .card-white {
+        display: grid;
+        align-items: center;
         border: 1px solid black;
         border-radius: 1ex;
         min-height: 20ex;

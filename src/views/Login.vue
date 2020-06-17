@@ -1,22 +1,23 @@
 <template>
-    <div class="hero-body">
-        <div class="container">
-            <div class="column is-5-tablet is-4-desktop is-3-widescreen is-offset-4">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-5-tablet is-4-desktop is-3-widescreen">
                 <form action="" class="box">
-                    <h3 class="subtitle is-3 has-text-centered">Ingrese sus datos</h3>
-
-                    <button class="button is-info is-fullwidth" @click="signup()">Registrarse</button>
-
-                    <br/>
+                    <h5 class="subtitle is-5 has-text-centered has-text-black">Ingrese sus datos</h5>
 
                     <div class="field">
                         <div class="control">
-                            <input type="text" class="input" placeholder="Email Address">
+                            <input type="text" class="input" 
+                                placeholder="Nombre de Usuario" 
+                                v-model="user.username">
                         </div>
                         <div class="control">
-                            <input type="password" class="input" placeholder="Password">
+                            <input type="password" class="input" 
+                                placeholder="Contraseña" 
+                                v-model="user.password">
                         </div>
                     </div>
+                    <!-- 
 
                     <div class="field">
                         <div class="control">
@@ -25,15 +26,21 @@
                                 Remember me
                             </label>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="field">
                         <div class="control">
-                            <button class="button is-fullwidth is-primary">
-                                Login
+                            <button 
+                                class="button is-fullwidth is-success" 
+                                @click="loginA()"
+                                :disabled="camposVacios">
+                                Iniciar Sesión
                             </button>
                         </div>
                     </div>
+
+                    <button class="button is-warning is-fullwidth" @click="signup()">Registrarse</button>
+
                 </form>
             </div>
         </div>
@@ -41,20 +48,32 @@
 </template>
 
 <script>
-export default {
-    methods:{
-        signup(){
-            this.$router.push('/registrase');
-        }
-    }
-}
-</script>
+    export default {
+        data() {
+            return {
+                user: {
+                    username: null,
+                    password: null
+                }
+            }
+        },
+        computed: {
+            camposVacios() {
+                if (this.user.username && this.user.password)
+                    return false;
 
-<style>
-    @media screen and (min-width: 769px), print
-    {
-        .column.is-offset-4 {
-            margin-left: 37.8%;
+                return true;
+            }
+        },
+        methods: {
+            loginA() {
+                this.$store.dispatch('loginAction', this.user);
+                this.user.username = null;
+                this.user.password = null;
+            },
+            signup() {
+                this.$router.push('/registrase');
+            }
         }
     }
-</style>
+</script>

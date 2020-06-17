@@ -2,13 +2,24 @@
     <div class="columns is-centered">
 
         <div class="column is-3">
+            
+            <button class="button is-warning is-fullwidth" @click="actualizarCarta()">
+                Repartir Cartas
+            </button>
+
+            <br>
+
             <div id="card-black" class="card">
                 <div class="card-content">
                     <p class="has-text-centered has-text-white">
-                        {{info}}
+                        {{ $store.state.table.blackCard }}
                     </p>
                 </div>
             </div>
+
+            <button class="button is-warning is-fullwidth" @click="actualizarCarta()">
+                Cambiar
+            </button>
         </div>
         
     </div>
@@ -16,23 +27,19 @@
 
 <script>
 export default {
-    name: 'CardBlack',
-    data(){
-        return {
-            info: 'Luego de desmayarme de la pea en Año Nuevo, me desperté con _____.'
+    name: 'BlackCard',
+    methods : {
+        actualizarCarta(){
+            this.$store.dispatch('setBlackCardAction');
         }
-    },
-    created(){
-        axios
-            .get('https://caracas-against-humanity.herokuapp.com/api/question')
-            .then(response => (this.info = response.data))
-            .catch(error => console.log(error))
     }
 }
 </script>
 
 <style>
     #card-black {
+        display: grid;
+        align-items: center;
         background: black;
         border: 1px solid white;
         border-radius: 1ex;
