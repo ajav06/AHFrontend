@@ -3,9 +3,7 @@
 
         <div class="column is-3">
             
-            <button class="button is-warning is-fullwidth" @click="actualizarCarta()">
-                Repartir Cartas
-            </button>
+            
 
             <br>
 
@@ -30,7 +28,8 @@ export default {
     name: 'BlackCard',
     methods : {
         actualizarCarta(){
-            this.$store.dispatch('setBlackCardAction');
+            let id = this.$store.state.table.codigo;
+            this.$store.dispatch('setBlackCardAction', id);
         }
     }
 }

@@ -6,7 +6,7 @@ class UserDataService {
     }
 
     logout(){
-        return http.post('auth/token/logout', {})
+        return http.post('auth/token/logout', {});
     }
 
     register(data){
@@ -14,11 +14,15 @@ class UserDataService {
     }
 
     get() {
-        return http.get('player/')
+        return http.get('player/');
+    }
+
+    table(){
+        return http.get('player/table/');
     }
 
     card(index){
-        return http.post('player/card/',{'index':index});
+        return http.get('player/card/'+index+'/');
     }
 }
 

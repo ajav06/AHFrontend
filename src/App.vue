@@ -13,7 +13,7 @@
 
           <div class="navbar-menu" id="navMenu">
             <div class="navbar-center">
-              <router-link class="navbar-item has-text-centered" to="/">Inicio</router-link>
+              <router-link class="navbar-item has-text-centered" to="/buscar">Buscar Mesa</router-link>
 
               <router-link class="navbar-item has-text-centered" to="/mesa">Mesa</router-link>
 

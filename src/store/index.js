@@ -55,10 +55,10 @@ const Player = {
 
           Swal.fire({
             icon: 'success',
-            title: 'Sesión iniciada con éxito'
+            title: 'Sesión iniciada con éxito.'
           }).then(result => {
 
-            location.href = '#/';
+            location.href = '#/buscar';
 
             window.location.reload(false);
 
@@ -84,10 +84,10 @@ const Player = {
 
           Swal.fire({
               icon: 'success',
-              title: 'Usuario registrado con éxito',
+              title: 'Usuario registrado con éxito.',
 
           }).then(result => {
-              location.href = '#/login/'
+              location.href = '#/'
           })
 
       })
@@ -122,10 +122,10 @@ const Player = {
 
           Swal.fire({
             icon: 'success',
-            title: 'Sesión cerrada con éxito',
+            title: 'Sesión cerrada con éxito.',
 
           }).then(result => {
-            location.href = '#/login/'
+            location.href = '#/'
           });
 
         })
@@ -146,9 +146,27 @@ const Player = {
         .then(response => {
 
           let white_cards = response.data['white_cards'];
-
-          context.commit('setCards', white_cards.split(','));
           context.commit('setUsername', response.data['name']);
+
+          if (white_cards != "")
+            context.commit('setCards', white_cards.split(','));
+          
+
+        })
+        .catch(error => console.log(error.response.data));
+    },
+
+    setCurrentCardAction(context, index) {
+
+      UserDataService
+        .card(index)
+        .then(response => {
+
+          let white_cards = response.data;
+          
+          context.commit('setCards', white_cards.split(','));
+
+          console.log(white_cards)
 
         })
         .catch(error => console.log(error.response.data));
@@ -161,9 +179,9 @@ const Player = {
 const Table = {
   state: {
     codigo: null,
-    blackCard: 'Luego de desmayarme de la pea en Año Nuevo, me desperté con _____.',
+    blackCard: 'me desperté con _____.',
     whiteCards: [],
-    is_active: false
+    is_init: false
   },
   mutations: {
     setCodigo(state, codigo) {
@@ -173,12 +191,16 @@ const Table = {
       state.blackCard = card;
     },
     setWhiteCards(state, cards) {
+      state.whiteCards = [];
       for (const card in cards){
         state.whiteCards = [{
           name: cards[card].name.toUpperCase(),
           card: cards[card].current_card
         },...state.whiteCards];
       }
+    },
+    initGame(state, value){
+      state.is_init = value;
     }
   },
   actions: {
@@ -191,6 +213,8 @@ const Table = {
           context.commit('setCodigo', response.data['id']);
 
           context.commit('setBlackCard', response.data['black_card']);
+
+          context.commit('initGame', response.data['is_active']);
 
           Swal.fire({
             icon: 'success',
@@ -207,7 +231,7 @@ const Table = {
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: error.response.data
+            text: error.response.data['error']
           });
 
         });
@@ -225,6 +249,8 @@ const Table = {
 
           context.commit('setWhiteCards', response.data['players']);
 
+          context.commit('initGame', response.data['is_active']);
+
           Swal.fire({
             icon: 'success',
             title: 'Se ha unido con éxito',
@@ -234,16 +260,22 @@ const Table = {
 
         })
         .catch(error => {
+          console.log(error.response.data);
+          let er = '';
+          if (error.response.data['error']){
+            er=(', '+error.response.data['error']).toLowerCase();
+          }            
+
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'No se puede unir'
+            text: 'No se puede unir' + er
           });
 
         });
     },
 
-    searchTableAction({dispatch, commit}, id) {
+    searchTableAction({dispatch, context}, id) {
       TableDataService
         .get(id)
         .then(response => {
@@ -273,11 +305,11 @@ const Table = {
         });
     },
 
-    setBlackCardAction(context) {
+    setBlackCardAction(context, id) {
       TableDataService
-        .get(id)
+        .setBlack(id)
         .then(response => {
-          context('setBlackCard', response.data['black_card'])
+          context.commit('setBlackCard', response.data['black_card']);
         })
         .catch(error => {
 
@@ -290,13 +322,64 @@ const Table = {
         });
     },
 
-    setWhiteCardsAction({context, state}) {
+    setWhiteCardsAction(context, id) {
       TableDataService
-        .get(state.codigo)
+        .get(id)
         .then(response => {
           context.commit('setWhiteCards', response.data['players']);
         })
-        .catch(error => console.log(error.response.data));
+        .catch(error => console.log(error.response.statusText));
+    },
+
+    initGameAction(context, id) {
+      TableDataService
+        .init(id)
+        .then(response => {
+
+          context.commit('initGame', response.data['is_active']);
+
+          context.commit('setBlackCard', response.data['black_card']);
+
+          context.commit('setWhiteCards', response.data['players']);
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Juego iniciado con éxito.',
+          });
+
+        })
+    },
+
+    setWCardsAction(context, id) {
+      TableDataService
+        .setCads(id)
+        .then(response => {
+
+          context.commit('setWhiteCards', response.data['players']);
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Juego iniciado con éxito.',
+          });
+
+        })
+    },
+
+    setTableAction(context) {
+      UserDataService
+        .table()
+        .then(response =>{
+
+          context.commit('setCodigo', response.data['id']);
+
+          context.commit('setBlackCard', response.data['black_card']);
+
+          context.commit('setWhiteCards', response.data['players']);
+
+          context.commit('initGame', response.data['is_active']);
+
+        })
+        .catch(error => console.log(error.response.data['error']));
     }
 
 

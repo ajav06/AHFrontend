@@ -40,8 +40,11 @@ export default {
         }
     },
     mounted(){
-        this.$store.dispatch('setCardsAction');
-        this.items = this.$store.state.player.cards;
+        if(this.$store.state.table.codigo != null)
+            var codigo = this.$store.state.table.codigo;
+            this.$store.dispatch('setWhiteCardsAction', codigo);
+            this.$store.dispatch('setCardsAction');
+            this.items = this.$store.state.player.cards;
     },
     methods: {
         recargar(){

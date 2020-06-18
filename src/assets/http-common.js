@@ -4,7 +4,7 @@ let token = String(Cookies.get('csrftoken'));
 function loginScript(keys) {
     return axios
             .post(url + 'auth/token/login', {
-                username: keys.username,
+                username: keys.username.toLowerCase(),
                 password: keys.password
             })
 };
@@ -12,7 +12,7 @@ function loginScript(keys) {
 function registerScript(keys) {
     return axios
             .post(url + 'auth/register/', {
-                username: keys.username,
+                username: keys.username.toLowerCase(),
                 password: keys.password
             })
 };

@@ -24,8 +24,10 @@ export default {
     },
     mounted(){
         if(this.$store.state.table.codigo != null)
-            this.$store.dispatch('setWhiteCardsAction');
+            var codigo = this.$store.state.table.codigo;
+            this.$store.dispatch('setWhiteCardsAction', codigo);
             this.items = this.$store.state.table.whiteCards;
+            this.$store.dispatch('setCardsAction');
     },
 }
 </script>

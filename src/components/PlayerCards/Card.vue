@@ -7,7 +7,8 @@
                 </p>
             </div>
         </div>
-        <button class="button is-warning is-fullwidth">
+        <button class="button is-warning is-fullwidth"
+            @click="lanzarCarta(item.index)">
             Lanzar
         </button>
     </div>
@@ -16,13 +17,13 @@
 <script>
     export default {
         name: 'CurrentCard',
-        props:['item']
-        /* created() {
-            axios
-                .get('https://caracas-against-humanity.herokuapp.com/api/answer')
-                .then(response => (this.info = response.data))
-                .catch(error => console.log(error))
-        } */
+        props:['item'],
+        methods:{
+            lanzarCarta(index){
+                console.log(index);
+                this.$store.dispatch('setCurrentCardAction', index);
+            }
+        }
     }
 </script>
 
