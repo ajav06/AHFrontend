@@ -3,7 +3,7 @@
         <div class="columns is-centered">
             <div class="column is-5-tablet is-4-desktop is-3-widescreen">
                 <form action="" class="box">
-                    <h5 class="subtitle is-5 has-text-centered has-text-black">Crear mesa de juego</h5>
+                    <h5 class="subtitle is-5 has-text-centered has-text-grey-dark">Crear mesa de juego</h5>
 
                     <br/>
 

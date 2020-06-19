@@ -4,7 +4,7 @@
         
             <div class="column is-5-tablet is-4-desktop is-3-widescreen">
                 <form action="" class="box">
-                    <h5 class="subtitle is-5 has-text-centered has-text-black">Ingrese código de la mesa</h5>
+                    <h5 class="subtitle is-5 has-text-centered has-text-grey-dark">Ingrese código de la mesa</h5>
 
                     <button class="button is-info is-fullwidth" @click="createTable()">Crear mesa</button>
 
@@ -19,7 +19,7 @@
 
                     <div class="field">
                         <div class="control">
-                            <button class="button is-fullwidth is-primary"
+                            <button class="button is-fullwidth is-success"
                                 @click="searchTable" :disabled="camposVacios">
                                 Cargar
                             </button>
@@ -62,12 +62,3 @@ export default {
     }
 }
 </script>
-
-<style>
-    @media screen and (min-width: 769px), print
-    {
-        .column.is-offset-4 {
-            margin-left: 37.8%;
-        }
-    }
-</style>

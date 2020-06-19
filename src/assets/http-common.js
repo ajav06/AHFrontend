@@ -1,4 +1,4 @@
-const url = 'http://192.168.0.103:8000/api/';
+const url = 'http://192.168.0.107:8000/api/';
 let token = String(Cookies.get('csrftoken'));
 
 function loginScript(keys) {
@@ -18,7 +18,7 @@ function registerScript(keys) {
 };
 
 var http = axios.create({
-    baseURL: 'http://192.168.0.103:8000/api/',
+    baseURL: url,
     headers: {
         'Content-type': 'application/json',
         'Authorization': 'Token ' + token

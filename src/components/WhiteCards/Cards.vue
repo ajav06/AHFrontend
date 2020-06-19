@@ -17,17 +17,6 @@ export default {
     components:{
         WhiteCard
     },
-    data() {
-        return {
-            items: this.$store.state.table.whiteCards
-        }
-    },
-    mounted(){
-        if(this.$store.state.table.codigo != null)
-            var codigo = this.$store.state.table.codigo;
-            this.$store.dispatch('setWhiteCardsAction', codigo);
-            this.items = this.$store.state.table.whiteCards;
-            this.$store.dispatch('setCardsAction');
-    },
+    props:['items']
 }
 </script>

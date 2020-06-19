@@ -7,7 +7,7 @@
                     Usuario: {{ $store.state.player.username }}
                 </h3>
 
-                <button class="button is-success" @click="recargar()">
+                <button class="button is-success-light" @click="recargar()">
                     Actualizar
                 </button>
             </div>
@@ -20,7 +20,7 @@
                 v-for="(card, index) of items"
                 :key="index">
 
-                <current-card :item="{ index, card }"/>
+                <current-card :item="{ index, card }" v-on:lanzar="actualizar"/>
 
             </div>
         </div>
@@ -39,15 +39,21 @@ export default {
             items: this.$store.state.player.cards
         }
     },
+    updated(){
+        this.items = this.$store.state.player.cards;
+    },
     mounted(){
+        this.$store.dispatch('setCardsAction');
         if(this.$store.state.table.codigo != null)
             var codigo = this.$store.state.table.codigo;
             this.$store.dispatch('setWhiteCardsAction', codigo);
-            this.$store.dispatch('setCardsAction');
-            this.items = this.$store.state.player.cards;
     },
     methods: {
         recargar(){
+            this.$store.dispatch('setCardsAction');
+            this.items = this.$store.state.player.cards;
+        },
+        actualizar(){
             this.$store.dispatch('setCardsAction');
             this.items = this.$store.state.player.cards;
         }

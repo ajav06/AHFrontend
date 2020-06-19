@@ -20,8 +20,10 @@
         props:['item'],
         methods:{
             lanzarCarta(index){
-                console.log(index);
+                var codigo = this.$store.state.table.codigo;
                 this.$store.dispatch('setCurrentCardAction', index);
+                this.$store.dispatch('setWhiteCardsAction', codigo);
+                this.$emit('lanzar');
             }
         }
     }

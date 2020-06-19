@@ -4,7 +4,13 @@
             <div class="columns is-centered">
                 <div class="column is-5-tablet is-4-desktop is-3-widescreen">
                     <form action="" class="box">
-                        <h5 class="title is-5 has-text-centered has-text-black">Ingrese sus datos</h5>
+                        <figure class="image">
+                            <img src="../assets/logo.png" alt="Logo Against Humanity Vzla">
+                        </figure>
+
+                        <br>
+
+                        <h5 class="subtitle is-5 has-text-centered has-text-grey-dark">Ingrese sus datos</h5>
 
                         <div class="field">
                             <div class="control">

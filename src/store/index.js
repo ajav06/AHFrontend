@@ -286,8 +286,10 @@ const Table = {
             title: 'Mesa encontrada',
             text: '¿Desea unirse?',
             showCancelButton:true,
-            cancelButtonColor:'#d33'
-
+            cancelButtonColor:'#d33',
+            confirmButtonColor:'#48c774',
+            cancelButtonText:'No',
+            confirmButtonText:'Sí',
           }).then(result => {
             if (result.value){
               dispatch('joinTableAction', id);
@@ -327,6 +329,7 @@ const Table = {
         .get(id)
         .then(response => {
           context.commit('setWhiteCards', response.data['players']);
+          context.commit('setBlackCard', response.data['black_card']);
         })
         .catch(error => console.log(error.response.statusText));
     },
@@ -359,7 +362,7 @@ const Table = {
 
           Swal.fire({
             icon: 'success',
-            title: 'Juego iniciado con éxito.',
+            title: 'Cartas repartidas con éxito.',
           });
 
         })

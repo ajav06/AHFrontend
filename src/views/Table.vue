@@ -6,7 +6,7 @@
             <div class="dropdown" :class="{'is-active' : dropdown}" @click="cambierEstadoDropdown()">
 
                 <div class="dropdown-trigger">
-                    <button class="button has-background-grey-lighter" aria-haspopup="true"
+                    <button class="button " aria-haspopup="true"
                         aria-controls="dropdown-menu">
 
                         <span >Opciones</span>
@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                    <div class="dropdown-content has-background-grey-lighter">
+                    <div class="dropdown-content">
 
                         <a class="dropdown-item" @click="iniciarJuego()"
                             v-show="!$store.state.table.is_init">
@@ -47,7 +47,7 @@
         </div>
 
         <black-card/>
-        <white-cards/>
+        <white-cards :items="whiteCards"/>
     </div>
 </template>
 
@@ -57,15 +57,29 @@ import WhiteCards from '../components/WhiteCards/Cards'
 
 export default {
     name: 'Table',
+    components:{
+        BlackCard,
+        WhiteCards
+    },
     data(){
         return {
             codigo: null,
-            dropdown: false
+            dropdown: false,
+            whiteCards: this.$store.state.table.whiteCards
         }
     },
     created(){
         this.$store.dispatch('setTableAction');
         this.codigo = this.$store.state.table.codigo;
+    },
+    updated(){
+        this.whiteCards = this.$store.state.table.whiteCards;
+    },
+    mounted(){
+        if(this.codigo != null)
+            var codigo = this.$store.state.table.codigo;
+            this.$store.dispatch('setWhiteCardsAction', codigo);
+            this.$store.dispatch('setCardsAction');
     },
     methods:{
         cambierEstadoDropdown(){
@@ -79,18 +93,21 @@ export default {
         },
         actualizarCartas(){
             this.$store.dispatch('setWhiteCardsAction', this.codigo);
+            this.whiteCards = this.$store.state.table.whiteCards;
+            this.$forceUpdate();
         }
     },
-    components:{
-        BlackCard,
-        WhiteCards
-    }
 }
 </script>
 
 <style>
     .dropdown-trigger button {
         min-width: 12rem;
+        background-color: #60efdb;
+    }
+
+    .dropdown-content{
+        background-color: #60efdb;
     }
 
     a.dropdown-item {
