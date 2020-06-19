@@ -21,6 +21,10 @@ class UserDataService {
         return http.get('player/table/');
     }
 
+    exitTable(){
+        return http.get('player/exit/');
+    }
+
     card(index){
         return http.get('player/card/'+index+'/');
     }

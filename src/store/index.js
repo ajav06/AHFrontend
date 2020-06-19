@@ -179,7 +179,7 @@ const Player = {
 const Table = {
   state: {
     codigo: null,
-    blackCard: 'me desperté con _____.',
+    blackCard: null,
     whiteCards: [],
     is_init: false
   },
@@ -201,7 +201,12 @@ const Table = {
     },
     initGame(state, value){
       state.is_init = value;
-    }
+    },
+    exitGame(state, value){
+      state.codigo = null;
+      state.blackCard = null;
+      state.whiteCards = [];
+      state.is_init= false;
   },
   actions: {
     createTableAction(context) {
@@ -383,8 +388,22 @@ const Table = {
 
         })
         .catch(error => console.log(error.response.data['error']));
-    }
+    },
 
+    setExitAction(context) {
+      UserDataService
+        .exitTable()
+        .then(response =>{
+
+          context.commit('exitGame', null);
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Se ha salido con éxito.',
+          });
+        })
+        .catch(error => console.log(error.response.data['error']));
+    }
 
   },
   getters: {

@@ -1,4 +1,4 @@
-const url = 'http://192.168.0.107:8000/api/';
+const url = 'https://ahbackend.herokuapp.com/api/';
 let token = String(Cookies.get('csrftoken'));
 
 function loginScript(keys) {

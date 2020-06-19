@@ -36,7 +36,9 @@
                         </a>
 
                         <a class="dropdown-item has-background-danger 
-                            has-text-weight-bold has-text-black">
+                            has-text-weight-bold has-text-black"
+                            v-show="$store.state.table.codigo"
+                            @click="salirMesa()">
                             Salir de la mesa
                         </a>
 
@@ -95,6 +97,25 @@ export default {
             this.$store.dispatch('setWhiteCardsAction', this.codigo);
             this.whiteCards = this.$store.state.table.whiteCards;
             this.$forceUpdate();
+        },
+        salirMesa(){
+
+            Swal.fire({
+                icon: 'info',
+                title: 'Salir de la mesa',
+                text: '¿Desea salir?',
+                showCancelButton:true,
+                cancelButtonColor:'#d33',
+                confirmButtonColor:'#48c774',
+                cancelButtonText:'No',
+                confirmButtonText:'Sí',
+
+            }).then(result => {
+                if (result.value){
+                    this.$store.dispatch('setExitAction');
+                    this.$forceUpdate();
+                }
+            });
         }
     },
 }
