@@ -51,7 +51,7 @@ const Player = {
         .login(keys)
         .then(response => {
 
-          Cookies.set('csrftoken',response.data['auth_token']);
+          Cookies.set('csrftoken',response.data['auth_token'], {expires: 0.5});
 
           Swal.fire({
             icon: 'success',
@@ -207,6 +207,7 @@ const Table = {
       state.blackCard = null;
       state.whiteCards = [];
       state.is_init= false;
+    }
   },
   actions: {
     createTableAction(context) {

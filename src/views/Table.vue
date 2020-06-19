@@ -1,55 +1,65 @@
 <template>
     <div class="container">
-        <h4 class="title is-4 has-text-centered">Código: {{codigo}}</h4>
 
-        <div class="has-text-centered">
-            <div class="dropdown" :class="{'is-active' : dropdown}" @click="cambierEstadoDropdown()">
+        <div v-show="$store.state.table.codigo">
+            <h4 class="title is-4 has-text-centered">Código: {{codigo}}</h4>
 
-                <div class="dropdown-trigger">
-                    <button class="button " aria-haspopup="true"
-                        aria-controls="dropdown-menu">
+            <div class="has-text-centered">
+                <div class="dropdown" :class="{'is-active' : dropdown}" @click="cambierEstadoDropdown()">
 
-                        <span >Opciones</span>
-                        <span class="icon is-small">
-                            <i class="fas fa-angle-down"></i>
-                        </span>
-                        
-                    </button>
-                </div>
+                    <div class="dropdown-trigger">
+                        <button class="button " aria-haspopup="true"
+                            aria-controls="dropdown-menu">
 
-                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                    <div class="dropdown-content">
-
-                        <a class="dropdown-item" @click="iniciarJuego()"
-                            v-show="!$store.state.table.is_init">
-                            Iniciar juego
-                        </a>
-
-                        <a class="dropdown-item" @click="repartirCartas()"
-                            v-show="$store.state.table.is_init">
-                            Repartir Cartas
-                        </a>
-
-                        <a class="dropdown-item" @click="actualizarCartas()"
-                            v-show="$store.state.table.is_init">
-                            Actualizar Cartas
-                        </a>
-
-                        <a class="dropdown-item has-background-danger 
-                            has-text-weight-bold has-text-black"
-                            v-show="$store.state.table.codigo"
-                            @click="salirMesa()">
-                            Salir de la mesa
-                        </a>
-
+                            <span >Opciones</span>
+                            <span class="icon is-small">
+                                <i class="fas fa-angle-down"></i>
+                            </span>
+                            
+                        </button>
                     </div>
-                </div>
 
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+
+                            <a class="dropdown-item" @click="iniciarJuego()"
+                                v-show="!$store.state.table.is_init">
+                                Iniciar juego
+                            </a>
+
+                            <a class="dropdown-item" @click="repartirCartas()"
+                                v-show="$store.state.table.is_init">
+                                Repartir Cartas
+                            </a>
+
+                            <a class="dropdown-item" @click="actualizarCartas()"
+                                v-show="$store.state.table.is_init">
+                                Actualizar Cartas
+                            </a>
+
+                            <a class="dropdown-item has-background-danger 
+                                has-text-weight-bold has-text-black"
+                                v-show="$store.state.table.codigo"
+                                @click="salirMesa()">
+                                Salir de la mesa
+                            </a>
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
+
+            <black-card/>
+            <white-cards :items="whiteCards"/>
         </div>
 
-        <black-card/>
-        <white-cards :items="whiteCards"/>
+        <div v-show="!$store.state.table.codigo" class="has-text-centered">
+            <router-link class="button is-success" to="/buscar">
+                Unirse a una mesa
+            </router-link>
+        </div>
+
     </div>
 </template>
 
@@ -75,6 +85,7 @@ export default {
         this.codigo = this.$store.state.table.codigo;
     },
     updated(){
+        this.codigo = this.$store.state.table.codigo;
         this.whiteCards = this.$store.state.table.whiteCards;
     },
     mounted(){

@@ -16,14 +16,12 @@
                             <div class="control">
                                 <input type="text" class="input" 
                                     placeholder="Nombre de Usuario"
-                                    v-model="user.username" 
-                                    required>
+                                    v-model="user.username">
                             </div>
                             <div class="control">
                                 <input type="password" class="input" 
                                     placeholder="Contraseña"
-                                    v-model="user.password" 
-                                    required>
+                                    v-model="user.password">
                             </div>
                         </div>
 
